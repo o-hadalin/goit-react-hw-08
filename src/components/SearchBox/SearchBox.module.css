@@ -1,0 +1,29 @@
+.searchBox {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 280px;
+  text-align: left;
+}
+
+.label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.input {
+  max-width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
