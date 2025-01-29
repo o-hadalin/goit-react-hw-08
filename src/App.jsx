@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import SearchBox from './components/SearchBox/SearchBox';
-import { fetchContacts } from './redux/contactsOps';
-import { selectIsLoading, selectError } from './redux/contactsSlice';
+import { fetchContacts } from './redux/contacts/operations';
+import { selectIsLoading, selectError } from './redux/contacts/selectors';
 import './App.css';
 
 const App = () => {
