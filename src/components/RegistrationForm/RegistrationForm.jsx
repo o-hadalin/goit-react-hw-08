@@ -1,8 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations';
 import { Link } from 'react-router-dom';
+
+import { register } from '../../redux/auth/operations';
+
 import styles from './RegistrationForm.module.css';
 
 const registrationSchema = Yup.object().shape({
