@@ -28,7 +28,7 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route
-          path="register"
+          path="/register"
           element={
             <RestrictedRoute>
               <RegistrationPage />
@@ -36,7 +36,7 @@ const App = () => {
           }
         />
         <Route
-          path="login"
+          path="/login"
           element={
             <RestrictedRoute>
               <LoginPage />
@@ -44,7 +44,7 @@ const App = () => {
           }
         />
         <Route
-          path="contacts"
+          path="/contacts"
           element={
             <PrivateRoute>
               <ContactsPage />
