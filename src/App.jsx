@@ -1,4 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { refreshUser } from './redux/auth/operations';
+import { selectIsLoggedIn } from './redux/auth/selectors';
 import Layout from './components/Layout/Layout';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
@@ -8,6 +12,14 @@ import LoginPage from './pages/LoginPage';
 import ContactsPage from './pages/ContactsPage';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(refreshUser());
+    }
+  }, [isLoggedIn, dispatch]);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
