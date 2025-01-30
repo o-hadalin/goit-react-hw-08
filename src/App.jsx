@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { refreshUser } from './redux/auth/operations';
-import { selectIsLoggedIn } from './redux/auth/selectors';
+import { selectIsRefreshing } from './redux/auth/selectors';
+import { useSelector } from 'react-redux';
 import Layout from './components/Layout/Layout';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
@@ -13,14 +14,18 @@ import ContactsPage from './pages/ContactsPage';
 
 const App = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isRefreshing = useSelector(selectIsRefreshing);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (token) {
       dispatch(refreshUser());
     }
-  }, [isLoggedIn, dispatch]);
-  return (
+  }, [token, dispatch]);
+
+  return isRefreshing ? (
+    <p>Loading...</p>
+  ) : (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
