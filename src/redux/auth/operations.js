@@ -46,7 +46,6 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     await axios.post('/users/logout');
     localStorage.removeItem('token');
     clearAuthHeader();
-    return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -58,7 +57,7 @@ export const refreshUser = createAsyncThunk(
     const token = localStorage.getItem('token');
 
     if (!token) {
-      return thunkAPI.rejectWithValue('No token available');
+      return thunkAPI.rejectWithValue('No token found');
     }
 
     setAuthHeader(token);
