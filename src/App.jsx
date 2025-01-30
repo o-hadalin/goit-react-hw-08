@@ -9,11 +9,11 @@ import ContactsPage from './pages/ContactsPage';
 
 const App = () => {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
         <Route
-          path="/register"
+          path="register"
           element={
             <RestrictedRoute>
               <RegistrationPage />
@@ -21,7 +21,7 @@ const App = () => {
           }
         />
         <Route
-          path="/login"
+          path="login"
           element={
             <RestrictedRoute>
               <LoginPage />
@@ -29,15 +29,15 @@ const App = () => {
           }
         />
         <Route
-          path="/contacts"
+          path="contacts"
           element={
             <PrivateRoute>
               <ContactsPage />
             </PrivateRoute>
           }
         />
-      </Routes>
-    </Layout>
+      </Route>
+    </Routes>
   );
 };
 
