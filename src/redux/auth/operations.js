@@ -8,6 +8,8 @@ export const register = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post('/users/signup', userData);
+      const { token } = response.data;
+      localStorage.setItem('token', token);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -20,6 +22,8 @@ export const login = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post('/users/login', userData);
+      const { token } = response.data;
+      localStorage.setItem('token', token);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -29,7 +33,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   const state = thunkAPI.getState();
-  const token = state.auth.token;
+  const token = state.auth.token || localStorage.getItem('token');
   if (!token) {
     return thunkAPI.rejectWithValue('No token available');
   }
@@ -43,6 +47,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
         },
       }
     );
+    localStorage.removeItem('token');
     return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -53,7 +58,7 @@ export const refreshUser = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const token = state.auth.token;
+    const token = state.auth.token || localStorage.getItem('token');
     if (!token) {
       return thunkAPI.rejectWithValue('No token available');
     }
