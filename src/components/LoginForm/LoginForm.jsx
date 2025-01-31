@@ -1,9 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { login } from '../../redux/auth/operations';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast'; 
 
 import styles from './LoginForm.module.css';
 
@@ -14,10 +15,11 @@ const loginSchema = Yup.object().shape({
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const loginError = useSelector(state => state.auth.error);
 
   const handleSubmit = (values, { resetForm }) => {
-    dispatch(login(values));
+    dispatch(login(values)).catch(() => {
+      toast.error('Invalid login or password');
+    });
     resetForm();
   };
 
@@ -45,7 +47,7 @@ const LoginForm = () => {
         <button className={styles.button} type="submit">
           Log In
         </button>
-        {loginError && <p className={styles.error}>Error: {loginError}</p>}
+
         <p className={styles.link}>
           No account yet? <Link to="/register">Sign up here</Link>.
         </p>
