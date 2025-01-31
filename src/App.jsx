@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { refreshUser } from './redux/auth/operations';
-import { selectIsRefreshing } from './redux/auth/selectors';
+import { selectIsRefreshing, selectIsLoggedIn } from './redux/auth/selectors';
 
 import Layout from './components/Layout/Layout';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
@@ -17,16 +17,24 @@ import ContactsPage from './pages/ContactsPage';
 const App = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  if (isRefreshing) {
-    return <p>Loading...</p>;
+  useEffect(() => {
+    if (!isRefreshing && isLoggedIn !== null) {
+      setIsAppReady(true);
+    }
+  }, [isRefreshing, isLoggedIn]);
+
+  if (!isAppReady) {
+    return null;
   }
 
-  return (
+  return isRefreshing ? null : (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
@@ -59,4 +67,5 @@ const App = () => {
     </Routes>
   );
 };
+
 export default App;
