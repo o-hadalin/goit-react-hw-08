@@ -1,16 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-<<<<<<< HEAD
-import { toast } from 'react-hot-toast';
 
-=======
->>>>>>> 01d990f5623c2ead5ca38adab7dbf0bf1f1adb3a
 import { login } from '../../redux/auth/operations';
-import { clearError } from '../../redux/auth/slice';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 
 import styles from './LoginForm.module.css';
 
@@ -23,27 +16,9 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const loginError = useSelector(state => state.auth.error);
 
-<<<<<<< HEAD
-  const handleSubmit = async (values, { resetForm }) => {
-    try {
-      await dispatch(login(values)).unwrap();
-      toast.success('Login successful!');
-      resetForm();
-    } catch (error) {
-      toast.error(error || 'Login failed. Please try again.');
-    }
-=======
-  useEffect(() => {
-    if (loginError) {
-      toast.error(`Login failed: ${loginError}`);
-      dispatch(clearError());
-    }
-  }, [loginError, dispatch]);
-
   const handleSubmit = (values, { resetForm }) => {
     dispatch(login(values));
     resetForm();
->>>>>>> 01d990f5623c2ead5ca38adab7dbf0bf1f1adb3a
   };
 
   return (
@@ -70,6 +45,7 @@ const LoginForm = () => {
         <button className={styles.button} type="submit">
           Log In
         </button>
+        {loginError && <p className={styles.error}>Error: {loginError}</p>}
         <p className={styles.link}>
           No account yet? <Link to="/register">Sign up here</Link>.
         </p>
