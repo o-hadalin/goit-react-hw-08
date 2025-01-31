@@ -36,12 +36,12 @@ const RegistrationForm = () => {
         </label>
         <label className={styles.label}>
           Email:
-          <Field className={styles.input} type="email" name="email" />
+          <Field className={styles.input} type="email" name="email" autoComplete="email"/>
           <ErrorMessage className={styles.error} name="email" component="div" />
         </label>
         <label className={styles.label}>
           Password:
-          <Field className={styles.input} type="password" name="password" />
+          <Field className={styles.input} type="password" name="password" autoComplete="current-password"/>
           <ErrorMessage
             className={styles.error}
             name="password"
