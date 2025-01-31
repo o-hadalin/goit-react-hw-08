@@ -22,7 +22,11 @@ export const register = createAsyncThunk(
       setAuthHeader(token);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const errorMessage =
+        error.response?.data?.code === 11000
+          ? 'User with this email already exists'
+          : error.response?.data?.message || 'Registration failed';
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -37,7 +41,9 @@ export const login = createAsyncThunk(
       setAuthHeader(token);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const errorMessage =
+        error.response?.data?.message || 'Invalid email or password';
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );

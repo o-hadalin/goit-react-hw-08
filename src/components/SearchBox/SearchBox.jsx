@@ -6,10 +6,10 @@ import styles from './SearchBox.module.css';
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(selectFilterValue); // Беремо значення з Redux
+  const filter = useSelector(selectFilterValue);
 
   const handleChange = e => {
-    dispatch(changeFilter(e.target.value.toLowerCase())); // Оновлюємо стан фільтра в Redux
+    dispatch(changeFilter(e.target.value.toLowerCase()));
   };
 
   return (
