@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-hot-toast';
 
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -17,9 +18,14 @@ const registrationSchema = Yup.object().shape({
 const RegistrationForm = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(register(values));
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      await dispatch(register(values)).unwrap();
+      toast.success('Registration successful!');
+      resetForm();
+    } catch (error) {
+      toast.error(error || 'Registration failed. Please try again.');
+    }
   };
 
   return (

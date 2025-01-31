@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-
 import { changeFilter } from '../../redux/filters/slice';
 import { selectFilterValue } from '../../redux/filters/selectors';
 
@@ -16,7 +15,7 @@ const SearchBox = () => {
   return (
     <div className={styles.searchBox}>
       <label htmlFor="search" className={styles.label}>
-        Find contacts by name
+        Find contacts by name or phone
       </label>
       <input
         id="search"

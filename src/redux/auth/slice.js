@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import { register, login, logout, refreshUser } from './operations';
 
 const initialState = {
@@ -41,6 +40,7 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, state => {
         state.isRefreshing = false;
         state.token = null;
+        localStorage.removeItem('token');
       });
   },
 });

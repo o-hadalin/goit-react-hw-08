@@ -1,6 +1,6 @@
 import axios from 'axios';
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-hot-toast';
 
 axios.defaults.baseURL = 'https://connections-api.goit.global/';
 
@@ -22,6 +22,7 @@ export const register = createAsyncThunk(
       setAuthHeader(token);
       return response.data;
     } catch (error) {
+      toast.error('Registration failed! Try again.');
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -37,6 +38,7 @@ export const login = createAsyncThunk(
       setAuthHeader(token);
       return response.data;
     } catch (error) {
+      toast.error('Login failed! Check credentials.');
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -48,6 +50,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     localStorage.removeItem('token');
     clearAuthHeader();
   } catch (error) {
+    toast.error('Logout failed! Try again.');
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -67,6 +70,9 @@ export const refreshUser = createAsyncThunk(
       const response = await axios.get('/users/current');
       return response.data;
     } catch (error) {
+      toast.error('Session expired! Please log in again.');
+      localStorage.removeItem('token');
+      clearAuthHeader();
       return thunkAPI.rejectWithValue(error.message);
     }
   }

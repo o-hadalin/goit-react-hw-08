@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-hot-toast';
 
 import { login } from '../../redux/auth/operations';
 import { Link } from 'react-router-dom';
@@ -16,9 +17,14 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const loginError = useSelector(state => state.auth.error);
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(login(values));
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      await dispatch(login(values)).unwrap();
+      toast.success('Login successful!');
+      resetForm();
+    } catch (error) {
+      toast.error(error || 'Login failed. Please try again.');
+    }
   };
 
   return (
