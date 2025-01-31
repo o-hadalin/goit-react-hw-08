@@ -29,7 +29,11 @@ const App = () => {
 
   return isRefreshing ? null : (
     <>
+<<<<<<< HEAD
       <Toaster position="top-right" />
+=======
+      <Toaster position="top-center" reverseOrder={false} />
+>>>>>>> 01d990f5623c2ead5ca38adab7dbf0bf1f1adb3a
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
